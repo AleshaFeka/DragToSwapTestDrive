@@ -1,5 +1,6 @@
 package com.popsa.interview.dragtoswap
 
+import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.graphics.*
@@ -134,6 +135,19 @@ class MainActivity : AppCompatActivity() {
         )
         draggable.visibility = View.VISIBLE
         moveDraggable(eventX, eventY)
+        showDraggableSmoothly()
+    }
+
+    private fun showDraggableSmoothly() {
+        draggable.scaleX = 0f
+        draggable.scaleY = 0f
+        val animX = ObjectAnimator.ofFloat(draggable, "scaleX", 0f, 1f).setDuration(200)
+        val animY = ObjectAnimator.ofFloat(draggable, "scaleY", 0f, 1f).setDuration(200)
+        AnimatorSet().apply {
+            play(animX)
+            play(animY)
+            start()
+        }
     }
 
     private fun moveDraggable(eventX: Int, eventY: Int) {
