@@ -22,9 +22,13 @@ class MainActivityCoordinator(
         cancelSwap()
     }
 
-    fun startedSwap(index: Int) {
+    fun startedSwap(index: Int, eventX: Int, eventY: Int) {
         viewModel.draggingIndex.value = index
-        viewModel.events.value = Events.ImageSelected
+        viewModel.events.value = Events.ImageSelected(eventX, eventY)
+    }
+
+    fun imageDragInProgress(eventX: Int, eventY: Int) {
+        viewModel.events.value = Events.ImageDragInProgress(eventX, eventY)
     }
 
     fun cancelSwap() {
@@ -37,6 +41,7 @@ class MainActivityCoordinator(
 
     sealed class Events {
         data class ImageDropped(val x: Int, val y: Int) : Events()
-        object ImageSelected: Events()
+        data class ImageDragInProgress(val x: Int, val y: Int) : Events()
+        data class ImageSelected(val x: Int, val y: Int) : Events()
     }
 }
